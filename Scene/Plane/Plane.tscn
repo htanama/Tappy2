@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://gxnb5doi5ep3"]
+
+[ext_resource type="Script" uid="uid://t1ne21aima1i" path="res://Scene/Plane/Plane.gd" id="1_hvwb8"]
+[ext_resource type="Texture2D" uid="uid://u3jxtdind7b5" path="res://assets/plane/planes_sheet.png" id="1_j24ca"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvwb8"]
+atlas = ExtResource("1_j24ca")
+region = Rect2(0, 0, 88, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb3rv"]
+atlas = ExtResource("1_j24ca")
+region = Rect2(88, 0, 88, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yd1c7"]
+atlas = ExtResource("1_j24ca")
+region = Rect2(176, 0, 88, 73)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mq6sq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvwb8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb3rv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yd1c7")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j24ca"]
+radius = 26.0192
+
+[sub_resource type="Animation" id="Animation_pb3rv"]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hvwb8"]
+resource_name = "jump"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.436332, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yd1c7"]
+_data = {
+&"RESET": SubResource("Animation_pb3rv"),
+&"jump": SubResource("Animation_hvwb8")
+}
+
+[node name="Plane" type="CharacterBody2D"]
+script = ExtResource("1_hvwb8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_mq6sq")
+animation = &"fly"
+autoplay = "fly"
+frame_progress = 0.834432
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, -1)
+shape = SubResource("CircleShape2D_j24ca")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_yd1c7")
+}

@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://bvhrt210xhcmd"]
+
+[ext_resource type="Script" uid="uid://bew1rstf0xy0n" path="res://Scene/Game/Game.gd" id="1_4osps"]
+[ext_resource type="Texture2D" uid="uid://c2je87tbflupe" path="res://assets/background/sky.png" id="1_k0621"]
+[ext_resource type="Texture2D" uid="uid://bkcv87oy4c2qs" path="res://assets/background/rocks_2.png" id="1_xb2vu"]
+[ext_resource type="Texture2D" uid="uid://b6i67j6u7o72w" path="res://assets/background/clouds_1.png" id="2_ssqj0"]
+[ext_resource type="PackedScene" uid="uid://gxnb5doi5ep3" path="res://Scene/Plane/Plane.tscn" id="4_eq4nl"]
+[ext_resource type="PackedScene" uid="uid://paimisui788n" path="res://Scene/Barrier/Barrier.tscn" id="5_lpnlh"]
+[ext_resource type="PackedScene" uid="uid://d0wj5neiuu1qn" path="res://Scene/GameUI/GameUi.tscn" id="7_hevcj"]
+[ext_resource type="AudioStream" uid="uid://cnvlkidcyx24e" path="res://assets/audio/bgm_menu.mp3" id="8_mgvjg"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_4osps")
+
+[node name="Sky" type="Sprite2D" parent="."]
+position = Vector2(0, 310)
+texture = ExtResource("1_k0621")
+
+[node name="Clouds1" type="Sprite2D" parent="."]
+position = Vector2(960, 539)
+texture = ExtResource("2_ssqj0")
+
+[node name="Rocks2" type="Sprite2D" parent="."]
+position = Vector2(-1, 316)
+texture = ExtResource("1_xb2vu")
+
+[node name="Plane" parent="." instance=ExtResource("4_eq4nl")]
+position = Vector2(40, 136)
+
+[node name="Barrier" parent="." instance=ExtResource("5_lpnlh")]
+
+[node name="PipesHolder" type="Node" parent="."]
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="UpperPoint" type="Marker2D" parent="."]
+position = Vector2(500, 293)
+
+[node name="LowerPoint" type="Marker2D" parent="."]
+position = Vector2(500, 501)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameUI" parent="CanvasLayer" instance=ExtResource("7_hevcj")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_mgvjg")
+volume_db = -20.0
+autoplay = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

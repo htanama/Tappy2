@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://paimisui788n"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dlv17"]
+distance = -853.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ofkix"]
+normal = Vector2(0, 1)
+
+[node name="Barrier" type="StaticBody2D"]
+
+[node name="FloorCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_dlv17")
+
+[node name="CCollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -17)
+shape = SubResource("WorldBoundaryShape2D_ofkix")
